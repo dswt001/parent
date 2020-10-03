@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.dk</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>parent</name>
+	<description>Demo project for Spring Boot</description>
+
+	<!-- 属性设置 -->
+	<properties>
+		<!-- 编译字符编码为utf-8 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--输出字符编码为UTF-8 -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- jdK版本 -->
+		<java.version>11</java.version>
+	</properties>
+
+	<dependencies>
+		<!-- springboot依赖包：spring-boot场景启动器，后面跟的单词就是场景，比如说后面跟web,就是导入web场景的
+        所有依赖。Spring Boot的核心启动器，包含了自动配置、日志和YAML -->
+		<!-- 直接创建maven项目，快速创建。目录结构只有两个，不是4个。 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<!--<exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>-->
+		</dependency>
+
+		<!-- web的场景，自动帮我们引入了web模块开发需要的相关jar包 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 打包war [2] 移除自带内置tomcat -->
+			<!--<exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions> -->
+		</dependency>
+
+		<!-- springboot程序测试依赖，如果是自动创建项目默认添加 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<!-- 作用域，此处是test级别，共有四种，scope的分类：
+            1.compile（编译范围）：默认就是compile，什么都不配置也就是意味着compile。compile表示被依赖项目需要参与
+            当前项目的编译，当然后续的测试、运行周期也参与其中，是一个比较强的依赖。打包的时候通常需要包含进去。
+            2.test（测试范围）：scope为test表示依赖项目仅仅参与测试相关的工作，包括测试代码的编译，执行。比较典型的如junit。
+            PS: test表示只能在src下的test文件夹下面才可以使用，你如果在a项目中引入了这个依赖，在b项目引入了a项目作为依赖，
+            在b项目中这个注解不会生效，因为scope为test时无法传递依赖。
+            3.runntime（运行时范围）：runntime表示被依赖项目无需参与项目的编译，不过后期的测试和运行周期需要其参与。
+            与compile相比，跳过编译而已。说实话在终端的项目（非开源，企业内部系统）中，和compile区别不是很大。比较常见的
+            如JSR×××的实现，对应的API jar是compile的，具体实现是runtime的，compile只需要知道接口就足够了。Oracle jdbc
+            驱动架包就是一个很好的例子，一般scope为runntime。另外runntime的依赖通常和optional搭配使用，optional为true。
+            我可以用A实现，也可以用B实现。
+            4.provided（已提供范围）：provided意味着打包的时候可以不用包进去，别的设施(Web Container)会提供。事实上
+            该依赖理论上可以参与编译，测试，运行等周期。相当于compile，但是在打包阶段做了exclude的动作。
+            例如，如果你开发了一个web应用，你可能在编译classpath中需要可用的Servlet API来编译一个servlet，但是你不会
+            想要在打包好的WAR中包含这个Servlet API；这个Servlet API JAR由你的应用服务器或者servlet容器提供。已提供范围
+            的依赖在编译classpath（不是运行时）可用。它们不是传递性的，也不会被打包。
+            5.system（系统范围）：system范围依赖与provided类似，但是你必须显式的提供一个对于本地系统中JAR文件的路径。
+            这么做是为了允许基于本地对象编译，而这些对象是系统类库的一部分。这样的构件应该是一直可用的，Maven也不会在仓库中
+            去寻找它。如果你将一个依赖范围设置成系统范围，你必须同时提供一个systemPath元素。注意该范围是不推荐使用的
+            （你应该一直尽量去从公共或定制的Maven仓库中引用依赖）。
+            6.具体使用：
+                @RunWith(SpringRunner.class)
+                @SpringBootTest(classes = Application.class)
+                public class UserTest {
+
+                    @Autowired
+                    private UserService userService;
+
+                    @Test
+                    public void testGet(){
+                        Users users = userService.gerUserById(1);
+                        System.out.println(users);
+                    }
+                }
+            -->
+			<scope>test</scope>
+			<!-- 去除其中包含的依赖（不想使用此依赖） -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<!--AOP，具体使用：
+            @Aspect
+            @Component
+            public class ServiceLogAspect {
+
+                public static final Logger log =
+                        LoggerFactory.getLogger(ServiceLogAspect.class);
+
+                /**
+                 * AOP通知：
+                 * 1. 前置通知：在方法调用之前执行
+                 * 2. 后置通知：在方法正常调用之后执行
+                 * 3. 环绕通知：在方法调用之前和之后，都分别可以执行的通知
+                 * 4. 异常通知：如果在方法调用过程中发生异常，则通知
+                 * 5. 最终通知：在方法调用之后执行
+                 */
+
+                /**
+                 * 切面表达式：
+                 * execution 代表所要执行的表达式主体
+                 * 第一处 * 代表方法返回类型 *代表所有类型
+                 * 第二处 包名代表aop监控的类所在的包
+                 * 第三处 .. 代表该包以及其子包下的所有类方法
+                 * 第四处 * 代表类名，*代表所有类
+                 * 第五处 *(..) *代表类中的方法名，(..)表示方法中的任何参数
+                 *
+                 * @param joinPoint
+                 * @return
+                 * @throws Throwable
+                 */
+                @Around("execution(* com.xuxu.service.impl..*.*(..))")
+                public Object recordTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
+
+                    log.info("====== 开始执行 {}.{} ======",
+                                    joinPoint.getTarget().getClass(),
+                                    joinPoint.getSignature().getName());
+
+                    // 记录开始时间
+                    long begin = System.currentTimeMillis();
+
+                    // 执行目标 service
+                    Object result = joinPoint.proceed();
+
+                    // 记录结束时间
+                    long end = System.currentTimeMillis();
+                    long takeTime = end - begin;
+
+                    if (takeTime > 3000) {
+                        log.error("====== 执行结束，耗时：{} 毫秒 ======", takeTime);
+                    } else if (takeTime > 2000) {
+                        log.warn("====== 执行结束，耗时：{} 毫秒 ======", takeTime);
+                    } else {
+                        log.info("====== 执行结束，耗时：{} 毫秒 ======", takeTime);
+                    }
+
+                    return result;
+                }
+
+            }
+        -->
+
+		<!-- (一)、Dao层的典型依赖—，和数据相关的依赖 -->
+
+		<!-- spring-data-commons(分页...) -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+		</dependency>
+
+		<!-- mysql(数据库) -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- springboot web开发thymeleaf模板 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+
+		<!-- json 三大组件-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- 添加Spring依赖的jar包-->
+		<!-- 核心包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<!-- Beans包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<!-- 切面包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<!--切片包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<!-- spring-jdbc依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<!-- 容器包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<!-- 容器依赖包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<!-- 表达式包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+		</dependency>
+		<!--Spring事物管理包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<!--Spring对象映射包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<!--SpringMVC包-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<!--spring end -->
+
+		<!-- common-lang3，各种工具类(StringUtils)-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<!-- lombok-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.50</version>
+		</dependency>
+
+		<!-- Java Object layout:java对象布局，可以用来输出偏向锁的信息-->
+		<!-- https://mvnrepository.com/artifact/org.openjdk.jol/jol-core -->
+		<dependency>
+			<groupId>org.openjdk.jol</groupId>
+			<artifactId>jol-core</artifactId>
+			<version>0.10</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
